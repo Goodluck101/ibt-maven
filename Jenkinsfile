@@ -22,5 +22,11 @@ pipeline {
                  echo 'Hello World, This is a testing Jenkinsfile'
              }
         }
+        stage('Git checkout') {
+             steps {
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GitHub-login-creds', url: 'https://github.com/Goodluck101/ibt-maven.git']])
+                sh 'ls -ltr'
+             }
+             }
     }
 }
