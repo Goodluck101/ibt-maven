@@ -27,7 +27,8 @@ environment {
                     }
             steps {
                 echo 'Hello World, This is a test'
-                echo '$env.version2'
+                echo "${env.version2}"
+                echo '${env.version2}'
             }
         }
         stage('testing Jenkinsfile') {
