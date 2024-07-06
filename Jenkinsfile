@@ -22,6 +22,11 @@ pipeline {
             }
         }
         stage('testing Jenkinsfile') {
+        when {
+           expression {
+             env.Branch_Name=='feature-gunjvm'
+             }
+        }
              steps {
                  echo 'Hello World, This is a testing Jenkinsfile'
              }
