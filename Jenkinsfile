@@ -53,5 +53,16 @@ environment {
                 echo 'Hello World!!, This is a test for webhook modified'
              }
         }
+        post {
+        always {
+        emailext body: '''Dear Team,
+
+        Your build job has been completed.
+        Kindly review the status.
+
+        Best regards,
+        NexGenix DevOps Team.''', subject: 'Post Email Test', to: 'ekeomaadiole@gmail.com'
+        }
+        }
     }
 }
