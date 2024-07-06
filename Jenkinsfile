@@ -32,6 +32,11 @@ pipeline {
                 sh 'ls -ltr'
                 sh 'echo $Branch_Name $CHOICES'
              }
+        }
+        stage('testing webhooks') {
+             steps {
+                echo 'Hello World, This is a testing webhooks'
              }
+        }
     }
 }
