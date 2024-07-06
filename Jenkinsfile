@@ -1,4 +1,8 @@
 pipeline {
+environment {
+    version = '1.3.0'
+
+    }
     agent any
     parameters {
     string (name: 'Branch_Name', defaultValue: 'main', description: 'Enter branch to checkout')
@@ -14,11 +18,16 @@ pipeline {
         stage('Hello2') {
             steps {
                 echo 'Hello World, This is stage 2'
+                echo '${env.version}'
             }
         }
         stage('test') {
+        environment {
+                    version2 = '1.5.0'
+                    }
             steps {
                 echo 'Hello World, This is a test'
+                echo '$env.version2'
             }
         }
         stage('testing Jenkinsfile') {
