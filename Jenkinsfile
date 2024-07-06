@@ -35,7 +35,7 @@ pipeline {
         }
         stage('testing webhooks') {
              steps {
-                echo 'Hello World!!, This is a testing webhook modified'
+                echo 'Hello World!!, This is a test for webhook modified'
              }
         }
     }
