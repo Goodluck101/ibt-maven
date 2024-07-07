@@ -1,8 +1,10 @@
 pipeline {
 environment {
     version = '1.3.0'
-
     }
+    tools {
+            maven 'Maven_3.9'
+        }
     agent any
     parameters {
     string (name: 'Branch_Name', defaultValue: 'main', description: 'Enter branch to checkout')
@@ -53,7 +55,7 @@ environment {
                 echo 'Hello World!!, This is a test for webhook modified'
              }
         }
-        post {
+/*        post {
         always {
         emailext body: '''Dear Team,
 
@@ -63,6 +65,7 @@ environment {
         Best regards,
         NexGenix DevOps Team.''', subject: 'Post Email Test', to: 'ekeomaadiole@gmail.com'
         }
-        }
+        } */
+
     }
 }
