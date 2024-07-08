@@ -62,7 +62,7 @@ pipeline {
               }
          }*/
 
-        stage('Package'){
+        stage('Deploy to Artifactory'){
             steps {
             withCredentials([file(credentialsId: 'mvn-settings', variable: 'mvn_settings')]) {
               withMaven(maven: 'Maven_3.9') {
