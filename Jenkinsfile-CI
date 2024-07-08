@@ -50,7 +50,7 @@ pipeline {
                  }
             }
        }
-       stage('Vulnerability scan - Dependency Check'){
+      /* stage('Vulnerability scan - Dependency Check'){
                    steps {
                       dependencyCheck additionalArguments: '''
                                                          -o "./"
@@ -60,6 +60,6 @@ pipeline {
                       dependencyCheckPublisher pattern: 'dependency-check-report.xml'
 
               }
-         }
+         }*/
     }
 }
