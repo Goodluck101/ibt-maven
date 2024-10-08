@@ -7,7 +7,8 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GitHub-login-creds', url: 'https://github.com/Goodluck101/ibt-maven.git']])
+             /*   checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GitHub-login-creds', url: 'https://github.com/Goodluck101/ibt-maven.git']]) */
+                checkout changelog: false, poll: false, scm: scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'Senior-DevOps-Teaam', url: 'https://github.com/Goodluck101/ibt-maven.git']])
             }
         }
         stage('Validate'){
@@ -69,6 +70,37 @@ pipeline {
                           sh 'mvn deploy -s $mvn_settings'
                      }
                  }
+            }
+        }
+        stage('Configure server - run ansible playbook')
+        {
+            steps{
+            /*    ansiblePlaybook credentialsId: 'Senior-DevOps-Teaam', inventory: 'hosts', playbook: 'tomcat-install.yml', vaultTmpPath: '' */
+                ansiblePlaybook become: true, colorized: true, credentialsId: 'private-key', disableHostKeyChecking: true, installation: 'Ansible', inventory: 'hosts', playbook: 'tomcat-install.yml', vaultTmpPath: ''
+             /*    ansiblePlaybook(
+                                 become: true,
+                                 colorized: true,
+                                 credentialsId: 'Senior-DevOps-Teaam',
+                                 disableHostkeyChecking: true,
+                                 inventory: 'hosts',
+                                 playbook: 'tomcat-install.yml'
+                                 ) */
+            }
+        }
+        stage('Deploy to Dev'){
+        when {
+            expression{
+                env.BRANCH_NAME=='main'
+            }
+        }
+        }
+        steps{
+            script{
+                def remote = [name: 'dev-server', host: '161.35.171.0', allowAnyHosts: true]
+                withCredentials
+                   remote.user = username
+                   remote.password = password
+                   sshPut remote: remote, from: 'target/ibt-maven-1.0-SNAPSHOT.jar', into: 'opt/tomcat/apps'
             }
         }
     }
